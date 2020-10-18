@@ -2,6 +2,10 @@ import json
 import argparse
 import os.path
 from os import path
+#34 decimals of precision
+from decimal import *
+getcontext().prec = 34
+getcontext().rounding = ROUND_HALF_UP
 
 parser = argparse.ArgumentParser(description="Calculate the sigma value of the specified pool. If you do not provide the path to a ledger file via the --ledger option then the script will look for a ledger.json file in the current directory")
 parser.add_argument('--pool-id', dest='id', help='the pool ID', required=True)
@@ -63,6 +67,6 @@ for poolid in blockstakedelegators:
             bs[poolid]=bs[poolid]+blockstake[d]
             total_bs=total_bs + blockstake[d]
 
-sigma = float(bs[poolId]/total_bs)
+sigma = Decimal(bs[poolId]/total_bs)
 
 print("Sigma:",sigma)
